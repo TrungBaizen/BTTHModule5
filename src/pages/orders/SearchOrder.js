@@ -3,7 +3,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {getAll} from "../../redux/services/OrderService";
 import Swal from "sweetalert2";
+import { parse} from "date-fns";
 
+const dateFormat = 'dd/MM/yyyy';
 function SearchOrder() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -22,10 +24,10 @@ function SearchOrder() {
 
     useEffect(() => {
         const orderList = orders.filter((item) => {
-            const purchaseDate = new Date(item.purchaseDate);
-            const start = new Date(startDate);
-            const end = new Date(endDate);
-            return (!startDate || purchaseDate >= start) && (!endDate || purchaseDate <= end);
+            const purchaseDate = parse(item.purchaseDate, dateFormat, new Date());
+            const start = startDate ? parse(startDate, dateFormat, new Date()) : null;
+            const end = endDate ? parse(endDate, dateFormat, new Date()) : null;
+            return (!start || purchaseDate >= start) && (!end || purchaseDate <= end);
         });
         if (orderList.length === 0) {
             Swal.fire({

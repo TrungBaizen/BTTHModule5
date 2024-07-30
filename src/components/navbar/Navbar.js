@@ -7,12 +7,15 @@ import {useNavigate} from "react-router-dom";
 import {Field, Form, Formik} from "formik";
 import React from "react";
 import {Button, Col, Row} from "react-bootstrap";
+import {format} from "date-fns";
 
 
 function BasicExample() {
     let navigate = useNavigate();
     const searchOrder = (value) => {
-        navigate(`/orders/search?startDate=${value.startDate}&endDate=${value.endDate}`)
+        const formattedStartDate = format(new Date(value.startDate), 'dd/MM/yyyy');
+        const formattedEndDate = format(new Date(value.endDate), 'dd/MM/yyyy');
+        navigate(`/orders/search?startDate=${formattedStartDate}&endDate=${formattedEndDate}`)
     }
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
