@@ -6,6 +6,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import {useNavigate} from "react-router-dom";
 import {Field, Form, Formik} from "formik";
 import React from "react";
+import {Button, Col, Row} from "react-bootstrap";
 
 
 function BasicExample() {
@@ -15,8 +16,8 @@ function BasicExample() {
     }
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
-            <Container>
-                <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+            <Container className=' container-fluid d-flex justify-content-between align-content-center'>
+                <Navbar.Brand href="#home">Codegym Shop</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
@@ -35,18 +36,27 @@ function BasicExample() {
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
-            </Container>
-            <Formik initialValues={{
+                <Formik initialValues={{
                 startDate: '',
                 endDate:''
             }}
-                    onSubmit={searchOrder}>
+                                           onSubmit={searchOrder}>
                 <Form>
-                    <Field name={"startDate"}  type={'date'}/>
-                    <Field name={"endDate"}  type={'date'}/>
-                    <button type={"submit"}>Search</button>
+                    <Row className="align-items-center">
+                        <Col  md={4} style={{width:"170px"}}>
+                            <Field name="startDate" type="date" className="form-control" />
+                        </Col>
+                        <Col  md={4}  style={{width:"170px"}}>
+                            <Field name="endDate" type="date" className="form-control" />
+                        </Col>
+                        <Col  className="d-flex justify-content-end">
+                            <Button type="submit" variant="primary">Tìm kiếm</Button>
+                        </Col>
+                    </Row>
                 </Form>
             </Formik>
+            </Container>
+
         </Navbar>
 
     );

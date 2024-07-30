@@ -57,21 +57,25 @@ function ListOrder() {
                 </thead>
                 <tbody>
                 {
-                    orders.map((item, index) => (
+                    orders.length > 0 ? orders.map((item, index) => (
                         <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{item.id}</td>
-                            <td>{item.product.name}</td>
-                            <td>{item.product.price}</td>
-                            <td>{item.product.category}</td>
+                            <td>{item.product ? item.product.name : 'Không có tên'}</td>
+                            <td>{item.product ? item.product.price : 'N/A'}</td>
+                            <td>{item.product ? item.product.category : 'N/A'}</td>
                             <td>{item.purchaseDate}</td>
                             <td>{item.quantity}</td>
-                            <td>{item.quantity*item.product.price}</td>
+                            <td>{item.quantity * (item.product ? item.product.price : 0)}</td>
                             <td>
                                 <button>Sửa</button>
                             </td>
                         </tr>
-                    ))
+                    )) : (
+                        <tr>
+                            <td colSpan="9">Không có dữ liệu</td>
+                        </tr>
+                    )
                 }
                 </tbody>
                 <tr>

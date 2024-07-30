@@ -1,9 +1,11 @@
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {getAll} from "../../redux/services/OrderService";
+import Swal from "sweetalert2";
 
 function SearchOrder() {
+    const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
     const query = new URLSearchParams(location.search);
@@ -25,13 +27,23 @@ function SearchOrder() {
             const end = new Date(endDate);
             return (!startDate || purchaseDate >= start) && (!endDate || purchaseDate <= end);
         });
-        (orderList != '')? setListSearch(orderList):window.alert("Không có kết quả");
+        if (orderList.length === 0) {
+            Swal.fire({
+                title: 'Không có kết quả',
+                text: 'Không tìm thấy đơn hàng nào trong khoảng thời gian đã chọn.',
+                icon: 'info',
+                confirmButtonText: 'OK'
+            });
+            navigate('/orders/home');
+        }
+
+        setListSearch(orderList);
     }, [orders, startDate,endDate]);
 
     return (
         <>
             <Link to={"/orders/home"}>
-                <button className="btn btn-outline-info mb-2">Trang chủ</button>
+                <button className="btn btn-outline-info mb-2">Trở lại</button>
             </Link>
             <table className="table table-hover table-bordered" style={{textAlign: "center"}}>
                 <thead>
